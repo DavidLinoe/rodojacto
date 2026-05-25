@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
-import { Machine } from '../models/machines.model';
+import { Device } from '../models/devices.model';
 
 @Injectable()
-export class MachinesApi {
+export class DevicesApi {
   constructor(private apiService: ApiService) {}
 
-  getAllMachines() {
-    return this.apiService.get<Machine[]>(`machines/all`);
+  getAllDevices() {
+    return this.apiService.get<Device[]>(`devices/all`);
   }
 
-  createMachine(machine: Partial<Machine>) {
-    return this.apiService.post<Machine>('machines', machine);
+  createDevice(machine: Partial<Device>) {
+    return this.apiService.post<Device>('devices', machine);
   }
 
-  updateMachine(id: string, machine: Partial<Machine>) {
-    return this.apiService.put<Machine>('machines', { id, ...machine });
+  updateDevice(id: string, machine: Partial<Device>) {
+    return this.apiService.put<Device>('devices', { id, ...machine });
   }
 
-  deleteMachine(id: string) {
-    return this.apiService.delete<Machine>(`machines?machineId=${id}`);
+  deleteDevice(id: string) {
+    return this.apiService.delete<Device>(`devices?id=${id}`);
   }
 }

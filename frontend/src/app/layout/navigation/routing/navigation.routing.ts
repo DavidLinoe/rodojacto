@@ -25,22 +25,22 @@ export const routes: Routes = [
     path: 'users',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('../../../features/users/containers/users.component').then((m) => m.UsersComponent),
+      import('../../../features/users/containers/users.component').then((m) => m.CollaboratorsComponent),
   },
   {
     path: 'companies',
     canActivate: [authGuard],
     loadComponent: () =>
       import('../../../features/companies/containers/companies.component').then(
-        (m) => m.CompaniesComponent,
+        (m) => m.OrganizationsComponent,
       ),
   },
   {
-    path: 'machines',
+    path: 'devices',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('../../../features/machines/containers/machines.component').then(
-        (m) => m.MachinesComponent,
+      import('../../../features/devices/containers/devices.component').then(
+        (m) => m.DevicesComponent,
       ),
   },
   {

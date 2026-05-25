@@ -7,6 +7,6 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   selector: 'feature-companies-component-company-modal',
   templateUrl: './company-modal.component.html',
 })
-export class CompanyModalComponent {
+export class OrganizationModalComponent {
   public form = input<FormGroup>(new FormGroup({}));
 }

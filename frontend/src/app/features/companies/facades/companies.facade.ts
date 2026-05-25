@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { CompaniesApi } from '../apis/companies.api';
-import { Company } from '../models/companies.model';
+import { OrganizationsApi } from '../apis/companies.api';
+import { Organization } from '../models/companies.model';
 import { TokenService } from '../../../services/token.service';
 
 @Injectable()
-export class CompaniesFacade {
-  public companies$: BehaviorSubject<Company[]> = new BehaviorSubject<Company[]>([]);
+export class OrganizationsFacade {
+  public companies$: BehaviorSubject<Organization[]> = new BehaviorSubject<Organization[]>([]);
   public count$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   constructor(
-    private companiesApi: CompaniesApi,
+    private companiesApi: OrganizationsApi,
     private tokenService: TokenService,
   ) {}
 
-  getAllCompanies(): void {
+  getAllOrganizations(): void {
     const userId = this.tokenService.decodeToken()?.userId ?? '';
-    this.companiesApi.getAllCompanies(userId).subscribe((response) => {
+    this.companiesApi.getAllOrganizations(userId).subscribe((response) => {
       if (response.data) {
         this.companies$.next(response.data);
         this.count$.next(response.count || response.data.length);
@@ -24,21 +24,21 @@ export class CompaniesFacade {
     });
   }
 
-  createCompany(company: Partial<Company>): void {
-    this.companiesApi.createCompany(company).subscribe(() => {
-      this.getAllCompanies();
+  createOrganization(company: Partial<Organization>): void {
+    this.companiesApi.createOrganization(company).subscribe(() => {
+      this.getAllOrganizations();
     });
   }
 
-  updateCompany(id: string, company: Partial<Company>): void {
-    this.companiesApi.updateCompany(id, company).subscribe(() => {
-      this.getAllCompanies();
+  updateOrganization(id: string, company: Partial<Organization>): void {
+    this.companiesApi.updateOrganization(id, company).subscribe(() => {
+      this.getAllOrganizations();
     });
   }
 
-  deleteCompany(id: string): void {
-    this.companiesApi.deleteCompany(id).subscribe(() => {
-      this.getAllCompanies();
+  deleteOrganization(id: string): void {
+    this.companiesApi.deleteOrganization(id).subscribe(() => {
+      this.getAllOrganizations();
     });
   }
 }

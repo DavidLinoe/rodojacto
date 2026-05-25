@@ -5,10 +5,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TableComponent } from '../../../components/table/containers/table.component';
 import { TotalizerComponent } from '../../../components/totalizer/containers/totalizer.component';
 import { ModalComponent } from '../../../components/modal/containers/modal.component';
-import { CompanyModalComponent } from '../components/company-modal/company-modal.component';
-import { CompaniesFacade } from '../facades/companies.facade';
-import { CompaniesApi } from '../apis/companies.api';
-import { Company, COMPANIES_COLUMNS } from '../models/companies.model';
+import { OrganizationModalComponent } from '../components/company-modal/company-modal.component';
+import { OrganizationsFacade } from '../facades/companies.facade';
+import { OrganizationsApi } from '../apis/companies.api';
+import { Organization, COMPANIES_COLUMNS } from '../models/companies.model';
 
 @Component({
   imports: [
@@ -16,13 +16,13 @@ import { Company, COMPANIES_COLUMNS } from '../models/companies.model';
     TableComponent,
     TotalizerComponent,
     ModalComponent,
-    CompanyModalComponent,
+    OrganizationModalComponent,
   ],
   selector: 'feature-companies',
   templateUrl: './companies.component.html',
-  providers: [CompaniesFacade, CompaniesApi],
+  providers: [OrganizationsFacade, OrganizationsApi],
 })
-export class CompaniesComponent implements OnInit {
+export class OrganizationsComponent implements OnInit {
   public open: boolean = false;
   public companyFormGroup!: FormGroup;
   public columns = COMPANIES_COLUMNS;
@@ -30,7 +30,7 @@ export class CompaniesComponent implements OnInit {
   constructor(
     public router: Router,
     private formBuilder: FormBuilder,
-    public companiesFacade: CompaniesFacade,
+    public companiesFacade: OrganizationsFacade,
   ) {}
 
   ngOnInit(): void {
@@ -39,30 +39,30 @@ export class CompaniesComponent implements OnInit {
       name: [''],
       cnpj: [''],
     });
-    this.companiesFacade.getAllCompanies();
+    this.companiesFacade.getAllOrganizations();
   }
 
-  openCreateCompany(): void {
+  openCreateOrganization(): void {
     this.companyFormGroup.reset({ id: null, name: '', cnpj: '' });
     this.open = true;
   }
 
-  openEditCompany(company: Company): void {
+  openEditOrganization(company: Organization): void {
     this.companyFormGroup.patchValue(company);
     this.open = true;
   }
 
-  submitCompany(): void {
+  submitOrganization(): void {
     const { id, ...payload } = this.companyFormGroup.value;
     if (id) {
-      this.companiesFacade.updateCompany(id, payload);
+      this.companiesFacade.updateOrganization(id, payload);
     } else {
-      this.companiesFacade.createCompany(payload);
+      this.companiesFacade.createOrganization(payload);
     }
     this.open = false;
   }
 
-  deleteCompany(company: Company): void {
-    this.companiesFacade.deleteCompany(company.id);
+  deleteOrganization(company: Organization): void {
+    this.companiesFacade.deleteOrganization(company.id);
   }
 }

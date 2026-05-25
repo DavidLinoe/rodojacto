@@ -5,18 +5,18 @@ import { TableComponent } from '../../../components/table/containers/table.compo
 import { TotalizerComponent } from '../../../components/totalizer/containers/totalizer.component';
 import { ModalComponent } from '../../../components/modal/containers/modal.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { UserModalComponent } from '../components/user-modal/user-modal.component';
-import { UsersFacade } from '../facades/users.facade';
-import { UsersApi } from '../apis/users.api';
-import { User, USERS_COLUMNS } from '../models/users.model';
+import { CollaboratorModalComponent } from '../components/user-modal/user-modal.component';
+import { CollaboratorsFacade } from '../facades/users.facade';
+import { CollaboratorsApi } from '../apis/users.api';
+import { Collaborator, USERS_COLUMNS } from '../models/users.model';
 
 @Component({
-  imports: [CommonModule, TableComponent, TotalizerComponent, ModalComponent, UserModalComponent],
+  imports: [CommonModule, TableComponent, TotalizerComponent, ModalComponent, CollaboratorModalComponent],
   selector: 'feature-users',
   templateUrl: './users.component.html',
-  providers: [UsersFacade, UsersApi],
+  providers: [CollaboratorsFacade, CollaboratorsApi],
 })
-export class UsersComponent implements OnInit {
+export class CollaboratorsComponent implements OnInit {
   public open: boolean = false;
   public userFormGroup!: FormGroup;
   public columns = USERS_COLUMNS;
@@ -24,7 +24,7 @@ export class UsersComponent implements OnInit {
   constructor(
     public router: Router,
     private formBuilder: FormBuilder,
-    public usersFacade: UsersFacade,
+    public usersFacade: CollaboratorsFacade,
   ) {}
 
   ngOnInit(): void {
@@ -34,30 +34,30 @@ export class UsersComponent implements OnInit {
       email: [''],
       role: [''],
     });
-    this.usersFacade.getAllUsers();
+    this.usersFacade.getAllCollaborators();
   }
 
-  openCreateUser(): void {
+  openCreateCollaborator(): void {
     this.userFormGroup.reset({ id: null, name: '', email: '', role: '' });
     this.open = true;
   }
 
-  openEditUser(user: User): void {
+  openEditCollaborator(user: Collaborator): void {
     this.userFormGroup.patchValue(user);
     this.open = true;
   }
 
-  submitUser(): void {
+  submitCollaborator(): void {
     const { id, ...payload } = this.userFormGroup.value;
     if (id) {
-      this.usersFacade.updateUser(id, payload);
+      this.usersFacade.updateCollaborator(id, payload);
     } else {
-      this.usersFacade.createUser(payload);
+      this.usersFacade.createCollaborator(payload);
     }
     this.open = false;
   }
 
-  deleteUser(user: User): void {
-    this.usersFacade.deleteUser(user.id);
+  deleteCollaborator(user: Collaborator): void {
+    this.usersFacade.deleteCollaborator(user.id);
   }
 }

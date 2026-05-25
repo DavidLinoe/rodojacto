@@ -13,7 +13,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const decoded = tokenService.decodeToken(token);
   const companyId = decoded?.companyId;
 
-  const shouldInjectCompanyId =
+  const shouldInjectOrganizationId =
     !!companyId &&
     (req.method === 'POST' || req.method === 'PUT') &&
     req.body !== null &&
@@ -22,7 +22,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     !Array.isArray(req.body) &&
     !('companyId' in (req.body as Record<string, unknown>));
 
-  const body = shouldInjectCompanyId
+  const body = shouldInjectOrganizationId
     ? { ...(req.body as Record<string, unknown>), companyId }
     : req.body;
 

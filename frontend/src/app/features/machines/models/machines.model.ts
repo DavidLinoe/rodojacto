@@ -1,4 +1,4 @@
-export interface Machine {
+export interface Device {
   id: string;
   name: string;
   serialNumber: string;
@@ -9,6 +9,6 @@ export const MACHINES_COLUMNS = [
   { name: 'id', label: 'ID' },
   { name: 'name', label: 'Name' },
   { name: 'serialNumber', label: 'Serial Number' },
-  { name: 'companyId', label: 'Company' },
+  { name: 'companyId', label: 'Organization' },
   { name: 'actions', label: 'Actions' },
 ];

@@ -4,9 +4,9 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   imports: [CommonModule, ReactiveFormsModule],
-  selector: 'feature-machines-component-machine-modal',
+  selector: 'feature-devices-component-machine-modal',
   templateUrl: './machine-modal.component.html',
 })
-export class MachineModalComponent {
+export class DeviceModalComponent {
   public form = input<FormGroup>(new FormGroup({}));
 }

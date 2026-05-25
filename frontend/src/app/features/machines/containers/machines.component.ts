@@ -5,10 +5,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TableComponent } from '../../../components/table/containers/table.component';
 import { TotalizerComponent } from '../../../components/totalizer/containers/totalizer.component';
 import { ModalComponent } from '../../../components/modal/containers/modal.component';
-import { MachineModalComponent } from '../components/machine-modal/machine-modal.component';
-import { MachinesFacade } from '../facades/machines.facade';
-import { MachinesApi } from '../apis/machines.api';
-import { Machine, MACHINES_COLUMNS } from '../models/machines.model';
+import { DeviceModalComponent } from '../components/machine-modal/machine-modal.component';
+import { DevicesFacade } from '../facades/devices.facade';
+import { DevicesApi } from '../apis/devices.api';
+import { Device, MACHINES_COLUMNS } from '../models/devices.model';
 
 @Component({
   imports: [
@@ -16,13 +16,13 @@ import { Machine, MACHINES_COLUMNS } from '../models/machines.model';
     TableComponent,
     TotalizerComponent,
     ModalComponent,
-    MachineModalComponent,
+    DeviceModalComponent,
   ],
-  selector: 'feature-machines',
-  templateUrl: './machines.component.html',
-  providers: [MachinesFacade, MachinesApi],
+  selector: 'feature-devices',
+  templateUrl: './devices.component.html',
+  providers: [DevicesFacade, DevicesApi],
 })
-export class MachinesComponent implements OnInit {
+export class DevicesComponent implements OnInit {
   public open: boolean = false;
   public machineFormGroup!: FormGroup;
   public columns = MACHINES_COLUMNS;
@@ -30,7 +30,7 @@ export class MachinesComponent implements OnInit {
   constructor(
     public router: Router,
     private formBuilder: FormBuilder,
-    public machinesFacade: MachinesFacade,
+    public devicesFacade: DevicesFacade,
   ) {}
 
   ngOnInit(): void {
@@ -39,10 +39,10 @@ export class MachinesComponent implements OnInit {
       name: [''],
       serialNumber: [''],
     });
-    this.machinesFacade.getAllMachines();
+    this.devicesFacade.getAllDevices();
   }
 
-  openCreateMachine(): void {
+  openCreateDevice(): void {
     this.machineFormGroup.reset({
       id: null,
       name: '',
@@ -51,22 +51,22 @@ export class MachinesComponent implements OnInit {
     this.open = true;
   }
 
-  openEditMachine(machine: Machine): void {
+  openEditDevice(machine: Device): void {
     this.machineFormGroup.patchValue(machine);
     this.open = true;
   }
 
-  submitMachine(): void {
+  submitDevice(): void {
     const { id, ...payload } = this.machineFormGroup.value;
     if (id) {
-      this.machinesFacade.updateMachine(id, payload);
+      this.devicesFacade.updateDevice(id, payload);
     } else {
-      this.machinesFacade.createMachine(payload);
+      this.devicesFacade.createDevice(payload);
     }
     this.open = false;
   }
 
-  deleteMachine(machine: Machine): void {
-    this.machinesFacade.deleteMachine(machine.id);
+  deleteDevice(machine: Device): void {
+    this.devicesFacade.deleteDevice(machine.id);
   }
 }

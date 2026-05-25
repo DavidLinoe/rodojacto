@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
-import { Company } from '../models/companies.model';
+import { Organization } from '../models/companies.model';
 
 @Injectable()
-export class CompaniesApi {
+export class OrganizationsApi {
   constructor(private apiService: ApiService) {}
 
-  getAllCompanies(userId: string) {
-    return this.apiService.get<Company[]>(`companies?userId=${userId}`);
+  getAllOrganizations(userId: string) {
+    return this.apiService.get<Organization[]>(`organizations?id=${userId}`);
   }
 
-  createCompany(company: Partial<Company>) {
-    return this.apiService.post<Company>('companies', company);
+  createOrganization(company: Partial<Organization>) {
+    return this.apiService.post<Organization>('organizations', company);
   }
 
-  updateCompany(id: string, company: Partial<Company>) {
-    return this.apiService.put<Company>('companies', { id, ...company });
+  updateOrganization(id: string, company: Partial<Organization>) {
+    return this.apiService.put<Organization>('organizations', { id, ...company });
   }
 
-  deleteCompany(id: string) {
-    return this.apiService.delete<Company>(`companies?companyId=${id}`);
+  deleteOrganization(id: string) {
+    return this.apiService.delete<Organization>(`organizations?id=${id}`);
   }
 }

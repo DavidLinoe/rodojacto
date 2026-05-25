@@ -11,7 +11,7 @@ export interface SignUpPayload {
   companyId?: string;
 }
 
-export interface AuthUser {
+export interface AuthCollaborator {
   id: string;
   name: string;
   email: string;

@@ -7,7 +7,7 @@ import { ResponseApi } from '../utils/types/apiResponse';
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
-  private apiUrl = 'http://localhost:3000/'; // todo criar environment
+  private apiUrl = 'http://localhost:8088/api';
 
   get<T>(path: string): Observable<ResponseApi<T>> {
     return this.httpClient.get<ResponseApi<T>>(this.apiUrl + path);

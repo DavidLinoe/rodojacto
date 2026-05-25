@@ -1,11 +1,11 @@
 <component-totalizer
   [count]="(usersFacade.count$ | async) ?? 0"
-  [title]="'Users'"
+  [title]="'Collaborators'"
   [actions]="[
     {
       label: 'Create',
       icon: '+',
-      callback: (item) => openCreateUser(),
+      callback: (item) => openCreateCollaborator(),
     },
   ]"
 ></component-totalizer>
@@ -17,12 +17,12 @@
     {
       label: 'Edit',
       icon: 'edit',
-      callback: (item) => openEditUser(item),
+      callback: (item) => openEditCollaborator(item),
     },
     {
       label: 'Delete',
       icon: 'delete',
-      callback: (item) => deleteUser(item),
+      callback: (item) => deleteCollaborator(item),
     },
   ]"
 ></component-table>
@@ -33,11 +33,11 @@
     {
       label: userFormGroup.get('id')?.value ? 'Update' : 'Create',
       disabled: false,
-      callback: (item) => submitUser(),
+      callback: (item) => submitCollaborator(),
     },
   ]"
   (close)="open = false"
-  [title]="userFormGroup.get('id')?.value ? 'Edit User' : 'Create User'"
+  [title]="userFormGroup.get('id')?.value ? 'Edit Collaborator' : 'Create Collaborator'"
 >
   <feature-users-component-user-modal [form]="userFormGroup"></feature-users-component-user-modal>
 </component-modal>

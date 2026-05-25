@@ -1,6 +1,6 @@
 <component-totalizer
   [count]="(companiesFacade.count$ | async) ?? 0"
-  [title]="'Companies'"
+  [title]="'Organizations'"
 ></component-totalizer>
 
 <component-table
@@ -10,7 +10,7 @@
     {
       label: 'Edit',
       icon: 'edit',
-      callback: (item) => openEditCompany(item),
+      callback: (item) => openEditOrganization(item),
     }
   ]"
 ></component-table>
@@ -21,11 +21,11 @@
     {
       label: companyFormGroup.get('id')?.value ? 'Update' : 'Create',
       disabled: false,
-      callback: (item) => submitCompany(),
+      callback: (item) => submitOrganization(),
     },
   ]"
   (close)="open = false"
-  [title]="companyFormGroup.get('id')?.value ? 'Edit Company' : 'Create Company'"
+  [title]="companyFormGroup.get('id')?.value ? 'Edit Organization' : 'Create Organization'"
 >
   <feature-companies-component-company-modal
     [form]="companyFormGroup"

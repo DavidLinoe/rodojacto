@@ -1,39 +1,39 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { MachinesApi } from '../apis/machines.api';
-import { Machine } from '../models/machines.model';
+import { DevicesApi } from '../apis/devices.api';
+import { Device } from '../models/devices.model';
 
 @Injectable()
-export class MachinesFacade {
-  public machines$: BehaviorSubject<Machine[]> = new BehaviorSubject<Machine[]>([]);
+export class DevicesFacade {
+  public devices$: BehaviorSubject<Device[]> = new BehaviorSubject<Device[]>([]);
   public count$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
-  constructor(private machinesApi: MachinesApi) {}
+  constructor(private devicesApi: DevicesApi) {}
 
-  getAllMachines(): void {
-    this.machinesApi.getAllMachines().subscribe((response) => {
+  getAllDevices(): void {
+    this.devicesApi.getAllDevices().subscribe((response) => {
       if (response.data) {
-        this.machines$.next(response.data);
+        this.devices$.next(response.data);
         this.count$.next(response.count || response.data.length);
       }
     });
   }
 
-  createMachine(machine: Partial<Machine>): void {
-    this.machinesApi.createMachine(machine).subscribe(() => {
-      this.getAllMachines();
+  createDevice(machine: Partial<Device>): void {
+    this.devicesApi.createDevice(machine).subscribe(() => {
+      this.getAllDevices();
     });
   }
 
-  updateMachine(id: string, machine: Partial<Machine>): void {
-    this.machinesApi.updateMachine(id, machine).subscribe(() => {
-      this.getAllMachines();
+  updateDevice(id: string, machine: Partial<Device>): void {
+    this.devicesApi.updateDevice(id, machine).subscribe(() => {
+      this.getAllDevices();
     });
   }
 
-  deleteMachine(id: string): void {
-    this.machinesApi.deleteMachine(id).subscribe(() => {
-      this.getAllMachines();
+  deleteDevice(id: string): void {
+    this.devicesApi.deleteDevice(id).subscribe(() => {
+      this.getAllDevices();
     });
   }
 }

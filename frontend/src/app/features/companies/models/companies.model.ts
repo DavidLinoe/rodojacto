@@ -1,4 +1,4 @@
-export interface Company {
+export interface Organization {
   id: string;
   name: string;
   cnpj: string;

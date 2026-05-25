@@ -7,6 +7,6 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   selector: 'feature-users-component-user-modal',
   templateUrl: './user-modal.component.html',
 })
-export class UserModalComponent {
+export class CollaboratorModalComponent {
   public form = input<FormGroup>(new FormGroup({}));
 }
