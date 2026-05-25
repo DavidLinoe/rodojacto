@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface DeviceRepository : JpaRepository<Device, Long> {
     fun findAllByOrganizationId(organizationId: Long): List<Device>
+    fun findByAssetTag(assetTag: String): Device?
 }
