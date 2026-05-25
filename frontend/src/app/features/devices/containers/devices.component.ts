@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TableComponent } from '../../../components/table/containers/table.component';
 import { TotalizerComponent } from '../../../components/totalizer/containers/totalizer.component';
 import { ModalComponent } from '../../../components/modal/containers/modal.component';
-import { DeviceModalComponent } from '../components/machine-modal/machine-modal.component';
+import { DeviceModalComponent } from '../components/device-modal/device-modal.component';
 import { DevicesFacade } from '../facades/devices.facade';
 import { DevicesApi } from '../apis/devices.api';
 import { Device, MACHINES_COLUMNS } from '../models/devices.model';
@@ -24,7 +24,7 @@ import { Device, MACHINES_COLUMNS } from '../models/devices.model';
 })
 export class DevicesComponent implements OnInit {
   public open: boolean = false;
-  public machineFormGroup!: FormGroup;
+  public deviceFormGroup!: FormGroup;
   public columns = MACHINES_COLUMNS;
 
   constructor(
@@ -34,7 +34,7 @@ export class DevicesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.machineFormGroup = this.formBuilder.group({
+    this.deviceFormGroup = this.formBuilder.group({
       id: [null],
       name: [''],
       serialNumber: [''],
@@ -43,7 +43,7 @@ export class DevicesComponent implements OnInit {
   }
 
   openCreateDevice(): void {
-    this.machineFormGroup.reset({
+    this.deviceFormGroup.reset({
       id: null,
       name: '',
       serialNumber: '',
@@ -51,13 +51,13 @@ export class DevicesComponent implements OnInit {
     this.open = true;
   }
 
-  openEditDevice(machine: Device): void {
-    this.machineFormGroup.patchValue(machine);
+  openEditDevice(device: Device): void {
+    this.deviceFormGroup.patchValue(device);
     this.open = true;
   }
 
   submitDevice(): void {
-    const { id, ...payload } = this.machineFormGroup.value;
+    const { id, ...payload } = this.deviceFormGroup.value;
     if (id) {
       this.devicesFacade.updateDevice(id, payload);
     } else {
@@ -66,7 +66,7 @@ export class DevicesComponent implements OnInit {
     this.open = false;
   }
 
-  deleteDevice(machine: Device): void {
-    this.devicesFacade.deleteDevice(machine.id);
+  deleteDevice(device: Device): void {
+    this.devicesFacade.deleteDevice(device.id);
   }
 }

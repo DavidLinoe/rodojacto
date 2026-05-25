@@ -1,10 +1,10 @@
 <component-totalizer
-  [count]="(companiesFacade.count$ | async) ?? 0"
+  [count]="(organizationsFacade.count$ | async) ?? 0"
   [title]="'Organizations'"
 ></component-totalizer>
 
 <component-table
-  [items]="companiesFacade.companies$ | async"
+  [items]="organizationsFacade.organizations$ | async"
   [columns]="columns"
   [actions]="[
     {
@@ -19,15 +19,15 @@
   [open]="open"
   [buttons]="[
     {
-      label: companyFormGroup.get('id')?.value ? 'Update' : 'Create',
+      label: organizationFormGroup.get('id')?.value ? 'Update' : 'Create',
       disabled: false,
       callback: (item) => submitOrganization(),
     },
   ]"
   (close)="open = false"
-  [title]="companyFormGroup.get('id')?.value ? 'Edit Organization' : 'Create Organization'"
+  [title]="organizationFormGroup.get('id')?.value ? 'Edit Organization' : 'Create Organization'"
 >
-  <feature-companies-component-company-modal
-    [form]="companyFormGroup"
-  ></feature-companies-component-company-modal>
+  <feature-organizations-component-organization-modal
+    [form]="organizationFormGroup"
+  ></feature-organizations-component-organization-modal>
 </component-modal>

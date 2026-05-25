@@ -1,44 +1,44 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { CollaboratorsApi } from '../apis/users.api';
-import { Collaborator } from '../models/users.model';
+import { CollaboratorsApi } from '../apis/collaborators.api';
+import { Collaborator } from '../models/collaborators.model';
 import { TokenService } from '../../../services/token.service';
 
 @Injectable()
 export class CollaboratorsFacade {
-  public users$: BehaviorSubject<Collaborator[]> = new BehaviorSubject<Collaborator[]>([]);
+  public collaborators$: BehaviorSubject<Collaborator[]> = new BehaviorSubject<Collaborator[]>([]);
   public count$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
-  constructor(private usersApi: CollaboratorsApi, private tokenService: TokenService) {}
+  constructor(private collaboratorsApi: CollaboratorsApi, private tokenService: TokenService) {}
 
   getAllCollaborators(): void {
     const token = this.tokenService.decodeToken();
-    if (!token?.companyId) {
+    if (!token?.organizationId) {
       console.error('Organization ID is missing in the token.');
       return;
     }
-    this.usersApi.getAllCollaborators(token?.companyId).subscribe((response) => {
+    this.collaboratorsApi.getAllCollaborators(token?.organizationId).subscribe((response) => {
       if (response.data) {
-        this.users$.next(response.data);
+        this.collaborators$.next(response.data);
         this.count$.next(response.count || response.data.length);
       }
     });
   }
 
-  createCollaborator(user: Partial<Collaborator>): void {
-    this.usersApi.createCollaborator(user).subscribe(() => {
+  createCollaborator(collaborator: Partial<Collaborator>): void {
+    this.collaboratorsApi.createCollaborator(collaborator).subscribe(() => {
       this.getAllCollaborators();
     });
   }
 
-  updateCollaborator(id: number, user: Partial<Collaborator>): void {
-    this.usersApi.updateCollaborator(id, user).subscribe(() => {
+  updateCollaborator(id: number, collaborator: Partial<Collaborator>): void {
+    this.collaboratorsApi.updateCollaborator(id, collaborator).subscribe(() => {
       this.getAllCollaborators();
     });
   }
 
   deleteCollaborator(id: number): void {
-    this.usersApi.deleteCollaborator(id).subscribe(() => {
+    this.collaboratorsApi.deleteCollaborator(id).subscribe(() => {
       this.getAllCollaborators();
     });
   }

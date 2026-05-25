@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 export interface DecodedToken {
-  userId: string;
+  collaboratorId: string;
   role: string;
-  companyId?: string;
+  organizationId?: string;
   iat: number;
   exp: number;
 }

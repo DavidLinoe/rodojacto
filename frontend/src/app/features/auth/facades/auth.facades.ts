@@ -7,7 +7,7 @@ import { ResponseApi } from '../../../utils/types/apiResponse';
 
 @Injectable()
 export class AuthFacade {
-  public user$: BehaviorSubject<AuthCollaborator | null> = new BehaviorSubject<AuthCollaborator | null>(null);
+  public collaborator$: BehaviorSubject<AuthCollaborator | null> = new BehaviorSubject<AuthCollaborator | null>(null);
 
   constructor(
     private authApi: AuthApi,
@@ -19,7 +19,7 @@ export class AuthFacade {
       tap((response) => {
         if (response.data?.token) {
           this.tokenService.setToken(response.data.token);
-          this.user$.next(response.data);
+          this.collaborator$.next(response.data);
         }
       }),
     );
@@ -30,7 +30,7 @@ export class AuthFacade {
       tap((response) => {
         if (response.data?.token) {
           this.tokenService.setToken(response.data.token);
-          this.user$.next(response.data);
+          this.collaborator$.next(response.data);
         }
       }),
     );
@@ -38,6 +38,6 @@ export class AuthFacade {
 
   signOut(): void {
     this.tokenService.removeToken();
-    this.user$.next(null);
+    this.collaborator$.next(null);
   }
 }

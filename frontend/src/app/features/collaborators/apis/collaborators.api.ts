@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
-import { Collaborator } from '../models/users.model';
+import { Collaborator } from '../models/collaborators.model';
 
 @Injectable()
 export class CollaboratorsApi {
   constructor(private apiService: ApiService) {}
 
-  getAllCollaborators(companyId: string) {
-    return this.apiService.get<Collaborator[]>(`collaborators?companyId=${companyId}`);
+  getAllCollaborators(organizationId: string) {
+    return this.apiService.get<Collaborator[]>(`collaborators?organizationId=${organizationId}`);
   }
 
-  createCollaborator(user: Partial<Collaborator>) {
-    return this.apiService.post<Collaborator>('collaborators', user);
+  createCollaborator(collaborator: Partial<Collaborator>) {
+    return this.apiService.post<Collaborator>('collaborators', collaborator);
   }
 
-  updateCollaborator(id: number, user: Partial<Collaborator>) {
-    return this.apiService.put<Collaborator>(`collaborators`, {id,...user});
+  updateCollaborator(id: number, collaborator: Partial<Collaborator>) {
+    return this.apiService.put<Collaborator>(`collaborators`, {id,...collaborator});
   }
 
   deleteCollaborator(id: number) {
-    return this.apiService.delete<Collaborator>(`collaborators?userId=${id}`);
+    return this.apiService.delete<Collaborator>(`collaborators?collaboratorId=${id}`);
   }
 }

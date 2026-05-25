@@ -24,15 +24,15 @@ export const NAVBAR_ITEMS: NavbarItem[] = [
     route: '/devices',
   },
   {
-    id: 'users',
+    id: 'collaborators',
     label: 'Collaborators',
-    icon: 'users',
-    route: '/users',
+    icon: 'collaborators',
+    route: '/collaborators',
   },
   {
-    id: 'companies',
+    id: 'organizations',
     label: 'Organizations',
     icon: 'building',
-    route: '/companies',
+    route: '/organizations',
   },
 ];

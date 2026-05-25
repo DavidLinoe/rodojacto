@@ -50,12 +50,12 @@ export class SignUpComponent implements OnInit {
     this.loading = true;
     this.errorMessage = null;
     const { confirmPassword, ...rest } = this.signUpForm.value;
-    const payload = { ...rest, companyId: '' };
+    const payload = { ...rest, organizationId: '' };
 
     this.authFacade.signUp(payload).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/companies']);
+        this.router.navigate(['/organizations']);
       },
       error: (err) => {
         this.loading = false;

@@ -11,19 +11,19 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   const decoded = tokenService.decodeToken(token);
-  const companyId = decoded?.companyId;
+  const organizationId = decoded?.organizationId;
 
   const shouldInjectOrganizationId =
-    !!companyId &&
+    !!organizationId &&
     (req.method === 'POST' || req.method === 'PUT') &&
     req.body !== null &&
     typeof req.body === 'object' &&
     !(req.body instanceof FormData) &&
     !Array.isArray(req.body) &&
-    !('companyId' in (req.body as Record<string, unknown>));
+    !('organizationId' in (req.body as Record<string, unknown>));
 
   const body = shouldInjectOrganizationId
-    ? { ...(req.body as Record<string, unknown>), companyId }
+    ? { ...(req.body as Record<string, unknown>), organizationId }
     : req.body;
 
   const authReq = req.clone({

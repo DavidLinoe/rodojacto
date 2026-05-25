@@ -19,14 +19,14 @@ export class DevicesFacade {
     });
   }
 
-  createDevice(machine: Partial<Device>): void {
-    this.devicesApi.createDevice(machine).subscribe(() => {
+  createDevice(device: Partial<Device>): void {
+    this.devicesApi.createDevice(device).subscribe(() => {
       this.getAllDevices();
     });
   }
 
-  updateDevice(id: string, machine: Partial<Device>): void {
-    this.devicesApi.updateDevice(id, machine).subscribe(() => {
+  updateDevice(id: string, device: Partial<Device>): void {
+    this.devicesApi.updateDevice(id, device).subscribe(() => {
       this.getAllDevices();
     });
   }

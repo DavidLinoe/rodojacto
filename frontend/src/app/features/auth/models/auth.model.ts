@@ -8,7 +8,7 @@ export interface SignUpPayload {
   email: string;
   password: string;
   role?: string;
-  companyId?: string;
+  organizationId?: string;
 }
 
 export interface AuthCollaborator {
@@ -16,7 +16,7 @@ export interface AuthCollaborator {
   name: string;
   email: string;
   role: string;
-  companyId: string;
+  organizationId: string;
   createdAt: string;
   token: string;
 }

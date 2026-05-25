@@ -42,7 +42,7 @@ export class SignInComponent implements OnInit {
     this.authFacade.signIn(email, password).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/companies']);
+        this.router.navigate(['/organizations']);
       },
       error: (err) => {
         this.loading = false;

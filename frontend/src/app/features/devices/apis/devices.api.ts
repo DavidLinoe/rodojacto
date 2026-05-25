@@ -10,12 +10,12 @@ export class DevicesApi {
     return this.apiService.get<Device[]>(`devices/all`);
   }
 
-  createDevice(machine: Partial<Device>) {
-    return this.apiService.post<Device>('devices', machine);
+  createDevice(device: Partial<Device>) {
+    return this.apiService.post<Device>('devices', device);
   }
 
-  updateDevice(id: string, machine: Partial<Device>) {
-    return this.apiService.put<Device>('devices', { id, ...machine });
+  updateDevice(id: string, device: Partial<Device>) {
+    return this.apiService.put<Device>('devices', { id, ...device });
   }
 
   deleteDevice(id: string) {

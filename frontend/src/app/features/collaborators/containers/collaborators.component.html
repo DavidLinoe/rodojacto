@@ -1,5 +1,5 @@
 <component-totalizer
-  [count]="(usersFacade.count$ | async) ?? 0"
+  [count]="(collaboratorsFacade.count$ | async) ?? 0"
   [title]="'Collaborators'"
   [actions]="[
     {
@@ -11,7 +11,7 @@
 ></component-totalizer>
 
 <component-table
-  [items]="usersFacade.users$ | async"
+  [items]="collaboratorsFacade.collaborators$ | async"
   [columns]="columns"
   [actions]="[
     {
@@ -31,13 +31,13 @@
   [open]="open"
   [buttons]="[
     {
-      label: userFormGroup.get('id')?.value ? 'Update' : 'Create',
+      label: collaboratorFormGroup.get('id')?.value ? 'Update' : 'Create',
       disabled: false,
       callback: (item) => submitCollaborator(),
     },
   ]"
   (close)="open = false"
-  [title]="userFormGroup.get('id')?.value ? 'Edit Collaborator' : 'Create Collaborator'"
+  [title]="collaboratorFormGroup.get('id')?.value ? 'Edit Collaborator' : 'Create Collaborator'"
 >
-  <feature-users-component-user-modal [form]="userFormGroup"></feature-users-component-user-modal>
+  <feature-collaborators-component-collaborator-modal [form]="collaboratorFormGroup"></feature-collaborators-component-collaborator-modal>
 </component-modal>

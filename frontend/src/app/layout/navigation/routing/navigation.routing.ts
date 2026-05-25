@@ -22,16 +22,16 @@ export const routes: Routes = [
       import('../../../features/home/containers/home.component').then((m) => m.HomeComponent),
   },
   {
-    path: 'users',
+    path: 'collaborators',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('../../../features/users/containers/users.component').then((m) => m.CollaboratorsComponent),
+      import('../../../features/collaborators/containers/collaborators.component').then((m) => m.CollaboratorsComponent),
   },
   {
-    path: 'companies',
+    path: 'organizations',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('../../../features/companies/containers/companies.component').then(
+      import('../../../features/organizations/containers/organizations.component').then(
         (m) => m.OrganizationsComponent,
       ),
   },

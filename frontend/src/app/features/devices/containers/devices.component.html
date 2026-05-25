@@ -31,15 +31,15 @@
   [open]="open"
   [buttons]="[
     {
-      label: machineFormGroup.get('id')?.value ? 'Update' : 'Create',
+      label: deviceFormGroup.get('id')?.value ? 'Update' : 'Create',
       disabled: false,
       callback: (item) => submitDevice(),
     },
   ]"
   (close)="open = false"
-  [title]="machineFormGroup.get('id')?.value ? 'Edit Device' : 'Create Device'"
+  [title]="deviceFormGroup.get('id')?.value ? 'Edit Device' : 'Create Device'"
 >
-  <feature-devices-component-machine-modal
-    [form]="machineFormGroup"
-  ></feature-devices-component-machine-modal>
+  <feature-devices-component-device-modal
+    [form]="deviceFormGroup"
+  ></feature-devices-component-device-modal>
 </component-modal>
