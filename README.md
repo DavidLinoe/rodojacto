@@ -32,9 +32,9 @@ Projeto full-stack com backend em Spring Boot (Kotlin) e frontend em Angular.
 Crie o banco e o usuário usados em [backend/src/main/resources/application.properties](backend/src/main/resources/application.properties):
 
 ```sql
-CREATE DATABASE rodojacto;
-CREATE USER 'admin'@'localhost' IDENTIFIED BY 'root';
-GRANT ALL PRIVILEGES ON rodojacto.* TO 'admin'@'localhost';
+CREATE DATABASE mysql-rodojacto;
+CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';
+GRANT ALL PRIVILEGES ON mysql-rodojacto.* TO 'root'@'localhost';
 FLUSH PRIVILEGES;
 ```
 

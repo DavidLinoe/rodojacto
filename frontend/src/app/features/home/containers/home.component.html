@@ -1,8 +1,8 @@
 <section class="mx-auto max-w-6xl px-6 py-12">
   <div class="mb-12 text-center">
     <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
-      Plataforma de gerenciamento de empresas, usuários e máquinas com autenticação JWT e segurança
-      em nível de linha (RLS) no PostgreSQL.
+      Plataforma de gerenciamento de empresas, usuários e dispositivos com autenticação JWT e
+      segurança.
     </p>
   </div>
 
@@ -44,7 +44,7 @@
       <ul class="space-y-2 text-sm text-gray-700">
         <li class="flex items-center gap-2">
           <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
-          Back-end: NestJS + TypeORM + PostgreSQL + JWT
+          Back-end: Spring Boot Kotlin + MySql + JWT
         </li>
         <li class="flex items-center gap-2">
           <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
@@ -55,18 +55,6 @@
           Arquitetura em camadas (containers, facades, stores, apis)
         </li>
       </ul>
-    </div>
-
-    <div
-      class="rounded-2xl border border-primary/30 bg-linear-to-br from-primary/5 to-transparent p-6 shadow-sm"
-    >
-      <h3 class="mb-3 text-lg font-semibold text-gray-900">Segurança no banco</h3>
-      <p class="text-sm text-gray-700">
-        A proteção dos dados é feita por <strong>Row Level Security</strong> no PostgreSQL. Usuários
-        com role <strong>USER</strong> só enxergam dados da própria empresa, e usuários
-        <strong>ADMIN</strong> têm acesso total — regras aplicadas diretamente pelo banco, não
-        apenas pela aplicação.
-      </p>
     </div>
   </div>
 </section>
