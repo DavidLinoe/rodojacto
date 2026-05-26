@@ -67,9 +67,8 @@ export class CollaboratorsComponent implements OnInit {
   }
 
   submitCollaborator(): void {
-    const { id, password, ...rest } = this.collaboratorFormGroup.value;
-    const payload: Partial<Collaborator> = { ...rest };
-    if (password) payload.password = password;
+    const { id, ...rest } = this.collaboratorFormGroup.value;
+    const payload: Partial<Collaborator> = { ...rest, password: rest.password ?? '' };
     if (id) {
       this.collaboratorsFacade.updateCollaborator(id, payload);
     } else {
