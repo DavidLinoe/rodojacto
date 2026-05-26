@@ -4,7 +4,7 @@ export interface DecodedToken {
   sub: string;
   id: number;
   fullName: string;
-  accessLevel: 'MANAGER' | 'OPERATOR';
+  accessLevel: 'ADMIN' | 'MANAGER' | 'OPERATOR';
   organizationId: number;
   iat: number;
   exp: number;

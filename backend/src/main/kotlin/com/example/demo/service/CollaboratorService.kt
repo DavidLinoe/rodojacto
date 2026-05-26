@@ -39,7 +39,7 @@ class CollaboratorService(
     @Transactional(readOnly = true)
     fun findAll(): List<CollaboratorResponse> {
         val user = organizationService.currentUser()
-        val list = if (user.accessLevel == AccessLevel.MANAGER)
+        val list = if (user.accessLevel != AccessLevel.OPERATOR)
             repository.findAll()
         else
             repository.findAllByOrganizationId(user.organization.id)

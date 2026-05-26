@@ -34,7 +34,7 @@ class DeviceService(
     @Transactional(readOnly = true)
     fun findAll(): List<DeviceResponse> {
         val user = organizationService.currentUser()
-        val list = if (user.accessLevel == AccessLevel.MANAGER)
+        val list = if (user.accessLevel != AccessLevel.OPERATOR)
             repository.findAll()
         else
             repository.findAllByOrganizationId(user.organization.id)

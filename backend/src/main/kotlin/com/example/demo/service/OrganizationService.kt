@@ -30,7 +30,7 @@ class OrganizationService(
     @Transactional(readOnly = true)
     fun findAll(): List<OrganizationResponse> {
         val user = currentUser()
-        return if (user.accessLevel == AccessLevel.MANAGER)
+        return if (user.accessLevel != AccessLevel.OPERATOR)
             repository.findAll().map { it.toResponse() }
         else
             listOf(findEntity(user.organization.id).toResponse())
@@ -69,13 +69,13 @@ class OrganizationService(
 
     fun ensureCanAccessOrg(orgId: Long) {
         val user = currentUser()
-        if (user.accessLevel != AccessLevel.MANAGER && user.organization.id != orgId)
+        if (user.accessLevel == AccessLevel.OPERATOR && user.organization.id != orgId)
             throw AccessDeniedException("Acesso negado à organização $orgId")
     }
 
     private fun requireManager() {
-        if (currentUser().accessLevel != AccessLevel.MANAGER)
-            throw AccessDeniedException("Apenas MANAGER pode executar esta operação")
+        if (currentUser().accessLevel == AccessLevel.OPERATOR)
+            throw AccessDeniedException("OPERATOR não pode executar esta operação")
     }
 
     private fun Organization.toResponse() = OrganizationResponse(

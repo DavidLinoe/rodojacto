@@ -58,7 +58,7 @@ class AuthService(
                 fullName = request.fullName.trim(),
                 email = email,
                 password = passwordEncoder.encode(request.password)!!,
-                accessLevel = AccessLevel.MANAGER,
+                accessLevel = AccessLevel.ADMIN,
                 organization = organization
             )
         )

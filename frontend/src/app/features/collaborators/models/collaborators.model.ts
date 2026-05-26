@@ -1,4 +1,4 @@
-export type AccessLevel = 'MANAGER' | 'OPERATOR';
+export type AccessLevel = 'ADMIN' | 'MANAGER' | 'OPERATOR';
 
 export interface Collaborator {
   id: number;
@@ -19,6 +19,7 @@ export const COLLABORATORS_COLUMNS = [
 ];
 
 export const ACCESS_LEVEL_OPTIONS: { value: AccessLevel; label: string }[] = [
+  { value: 'ADMIN', label: 'Administrador' },
   { value: 'MANAGER', label: 'Gerente' },
   { value: 'OPERATOR', label: 'Operador' },
 ];
