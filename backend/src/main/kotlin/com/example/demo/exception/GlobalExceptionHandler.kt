@@ -3,6 +3,9 @@ package com.example.demo.exception
 import com.example.demo.dto.response.ResponseApi
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.AccessDeniedException
+import org.springframework.security.core.AuthenticationException
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
@@ -26,6 +29,40 @@ class GlobalExceptionHandler {
                 message = ex.message ?: "Requisição inválida",
                 statusCode = HttpStatus.BAD_REQUEST.value(),
                 error = "Bad Request"
+            )
+        )
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun handleValidation(ex: MethodArgumentNotValidException): ResponseEntity<ResponseApi<Nothing>> {
+        val errors = ex.bindingResult.fieldErrors.joinToString("; ") {
+            "${it.field}: ${it.defaultMessage}"
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            ResponseApi.error(
+                message = errors.ifBlank { "Dados inválidos" },
+                statusCode = HttpStatus.BAD_REQUEST.value(),
+                error = "Validation Error"
+            )
+        )
+    }
+
+    @ExceptionHandler(AuthenticationException::class)
+    fun handleAuthentication(ex: AuthenticationException): ResponseEntity<ResponseApi<Nothing>> =
+        ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+            ResponseApi.error(
+                message = ex.message ?: "Não autenticado",
+                statusCode = HttpStatus.UNAUTHORIZED.value(),
+                error = "Unauthorized"
+            )
+        )
+
+    @ExceptionHandler(AccessDeniedException::class)
+    fun handleAccessDenied(ex: AccessDeniedException): ResponseEntity<ResponseApi<Nothing>> =
+        ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+            ResponseApi.error(
+                message = ex.message ?: "Acesso negado",
+                statusCode = HttpStatus.FORBIDDEN.value(),
+                error = "Forbidden"
             )
         )
 

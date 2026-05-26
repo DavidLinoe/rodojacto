@@ -4,6 +4,7 @@ import com.example.demo.dto.request.CollaboratorRequest
 import com.example.demo.dto.response.CollaboratorResponse
 import com.example.demo.dto.response.ResponseApi
 import com.example.demo.service.CollaboratorService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -15,7 +16,7 @@ class CollaboratorController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: CollaboratorRequest): ResponseApi<CollaboratorResponse> =
+    fun create(@Valid @RequestBody request: CollaboratorRequest): ResponseApi<CollaboratorResponse> =
         ResponseApi.success(
             data = service.create(request),
             message = "Colaborador criado com sucesso",
@@ -42,7 +43,7 @@ class CollaboratorController(
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: Long,
-        @RequestBody request: CollaboratorRequest
+        @Valid @RequestBody request: CollaboratorRequest
     ): ResponseApi<CollaboratorResponse> =
         ResponseApi.success(
             data = service.update(id, request),

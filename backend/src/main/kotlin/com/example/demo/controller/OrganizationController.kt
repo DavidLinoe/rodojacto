@@ -4,6 +4,7 @@ import com.example.demo.dto.request.OrganizationRequest
 import com.example.demo.dto.response.OrganizationResponse
 import com.example.demo.dto.response.ResponseApi
 import com.example.demo.service.OrganizationService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -15,7 +16,7 @@ class OrganizationController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: OrganizationRequest): ResponseApi<OrganizationResponse> =
+    fun create(@Valid @RequestBody request: OrganizationRequest): ResponseApi<OrganizationResponse> =
         ResponseApi.success(
             data = service.create(request),
             message = "Organização criada com sucesso",
@@ -42,7 +43,7 @@ class OrganizationController(
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: Long,
-        @RequestBody request: OrganizationRequest
+        @Valid @RequestBody request: OrganizationRequest
     ): ResponseApi<OrganizationResponse> =
         ResponseApi.success(
             data = service.update(id, request),

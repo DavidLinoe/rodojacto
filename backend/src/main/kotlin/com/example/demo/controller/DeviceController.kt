@@ -4,6 +4,7 @@ import com.example.demo.dto.request.DeviceRequest
 import com.example.demo.dto.response.DeviceResponse
 import com.example.demo.dto.response.ResponseApi
 import com.example.demo.service.DeviceService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -15,7 +16,7 @@ class DeviceController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: DeviceRequest): ResponseApi<DeviceResponse> =
+    fun create(@Valid @RequestBody request: DeviceRequest): ResponseApi<DeviceResponse> =
         ResponseApi.success(
             data = service.create(request),
             message = "Dispositivo criado com sucesso",
@@ -42,7 +43,7 @@ class DeviceController(
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: Long,
-        @RequestBody request: DeviceRequest
+        @Valid @RequestBody request: DeviceRequest
     ): ResponseApi<DeviceResponse> =
         ResponseApi.success(
             data = service.update(id, request),

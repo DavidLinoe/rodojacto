@@ -31,7 +31,7 @@ class JwtAuthenticationFilter(
                 val collaborator = collaboratorRepository.findByEmail(email)
                 if (collaborator != null) {
                     val auth = UsernamePasswordAuthenticationToken(
-                        collaborator.email,
+                        collaborator,
                         null,
                         listOf(SimpleGrantedAuthority("ROLE_${collaborator.accessLevel.name}"))
                     )
