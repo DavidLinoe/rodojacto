@@ -26,7 +26,7 @@ class JwtAuthenticationFilter(
         val header = request.getHeader(HttpHeaders.AUTHORIZATION)
         if (header != null && header.startsWith("Bearer ")) {
             val token = header.substring(7)
-            if (jwtService.isValid(token) && SecurityContextHolder.getContext().authentication == null) {
+            if (jwtService.isValid(token)) {
                 val email = jwtService.extractEmail(token)
                 val collaborator = collaboratorRepository.findByEmail(email)
                 if (collaborator != null) {

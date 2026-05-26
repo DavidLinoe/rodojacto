@@ -30,10 +30,7 @@ class OrganizationService(
     @Transactional(readOnly = true)
     fun findAll(): List<OrganizationResponse> {
         val user = currentUser()
-        return if (user.accessLevel != AccessLevel.OPERATOR)
-            repository.findAll().map { it.toResponse() }
-        else
-            listOf(findEntity(user.organization.id).toResponse())
+        return listOf(findEntity(user.organization.id).toResponse())
     }
 
     @Transactional(readOnly = true)
@@ -56,6 +53,8 @@ class OrganizationService(
     @Transactional
     fun delete(id: Long) {
         requireManager()
+        if (currentUser().organization.id == id)
+            throw AccessDeniedException("Não é possível remover a organização à qual você pertence")
         val entity = findEntity(id)
         repository.delete(entity)
     }

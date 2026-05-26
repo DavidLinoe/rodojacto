@@ -30,4 +30,7 @@ data class Collaborator(
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "organization_id", nullable = false)
     val organization: Organization
-)
+) : java.security.Principal {
+    override fun getName(): String = email
+    override fun toString(): String = "Collaborator(id=$id, email=$email, accessLevel=$accessLevel)"
+}
