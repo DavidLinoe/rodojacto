@@ -3,6 +3,7 @@ package com.example.demo.controller
 import com.example.demo.dto.request.LoginRequest
 import com.example.demo.dto.request.RegisterRequest
 import com.example.demo.dto.response.LoginResponse
+import com.example.demo.dto.response.ResponseApi
 import com.example.demo.service.AuthService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -14,11 +15,19 @@ class AuthController(
 ) {
 
     @PostMapping("/login")
-    fun login(@RequestBody request: LoginRequest): LoginResponse =
-        authService.login(request)
+    fun login(@RequestBody request: LoginRequest): ResponseApi<LoginResponse> =
+        ResponseApi.success(
+            data = authService.login(request),
+            message = "Login realizado com sucesso",
+            statusCode = HttpStatus.OK.value()
+        )
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    fun register(@RequestBody request: RegisterRequest): LoginResponse =
-        authService.register(request)
+    fun register(@RequestBody request: RegisterRequest): ResponseApi<LoginResponse> =
+        ResponseApi.success(
+            data = authService.register(request),
+            message = "Cadastro realizado com sucesso",
+            statusCode = HttpStatus.CREATED.value()
+        )
 }

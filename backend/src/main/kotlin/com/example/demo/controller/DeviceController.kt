@@ -2,9 +2,9 @@ package com.example.demo.controller
 
 import com.example.demo.dto.request.DeviceRequest
 import com.example.demo.dto.response.DeviceResponse
+import com.example.demo.dto.response.ResponseApi
 import com.example.demo.service.DeviceService
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -15,24 +15,46 @@ class DeviceController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: DeviceRequest): DeviceResponse =
-        service.create(request)
+    fun create(@RequestBody request: DeviceRequest): ResponseApi<DeviceResponse> =
+        ResponseApi.success(
+            data = service.create(request),
+            message = "Dispositivo criado com sucesso",
+            statusCode = HttpStatus.CREATED.value()
+        )
 
     @GetMapping
-    fun findAll(): List<DeviceResponse> = service.findAll()
+    fun findAll(): ResponseApi<List<DeviceResponse>> {
+        val list = service.findAll()
+        return ResponseApi.success(
+            data = list,
+            message = "Dispositivos listados com sucesso",
+            count = list.size
+        )
+    }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Long): DeviceResponse = service.findById(id)
+    fun findById(@PathVariable id: Long): ResponseApi<DeviceResponse> =
+        ResponseApi.success(
+            data = service.findById(id),
+            message = "Dispositivo encontrado"
+        )
 
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: Long,
         @RequestBody request: DeviceRequest
-    ): DeviceResponse = service.update(id, request)
+    ): ResponseApi<DeviceResponse> =
+        ResponseApi.success(
+            data = service.update(id, request),
+            message = "Dispositivo atualizado com sucesso"
+        )
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+    fun delete(@PathVariable id: Long): ResponseApi<Unit> {
         service.delete(id)
-        return ResponseEntity.noContent().build()
+        return ResponseApi.success(
+            data = null,
+            message = "Dispositivo removido com sucesso"
+        )
     }
 }

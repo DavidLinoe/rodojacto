@@ -2,9 +2,9 @@ package com.example.demo.controller
 
 import com.example.demo.dto.request.OrganizationRequest
 import com.example.demo.dto.response.OrganizationResponse
+import com.example.demo.dto.response.ResponseApi
 import com.example.demo.service.OrganizationService
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -15,24 +15,46 @@ class OrganizationController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: OrganizationRequest): OrganizationResponse =
-        service.create(request)
+    fun create(@RequestBody request: OrganizationRequest): ResponseApi<OrganizationResponse> =
+        ResponseApi.success(
+            data = service.create(request),
+            message = "Organização criada com sucesso",
+            statusCode = HttpStatus.CREATED.value()
+        )
 
     @GetMapping
-    fun findAll(): List<OrganizationResponse> = service.findAll()
+    fun findAll(): ResponseApi<List<OrganizationResponse>> {
+        val list = service.findAll()
+        return ResponseApi.success(
+            data = list,
+            message = "Organizações listadas com sucesso",
+            count = list.size
+        )
+    }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Long): OrganizationResponse = service.findById(id)
+    fun findById(@PathVariable id: Long): ResponseApi<OrganizationResponse> =
+        ResponseApi.success(
+            data = service.findById(id),
+            message = "Organização encontrada"
+        )
 
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: Long,
         @RequestBody request: OrganizationRequest
-    ): OrganizationResponse = service.update(id, request)
+    ): ResponseApi<OrganizationResponse> =
+        ResponseApi.success(
+            data = service.update(id, request),
+            message = "Organização atualizada com sucesso"
+        )
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long): ResponseEntity<Void> {
+    fun delete(@PathVariable id: Long): ResponseApi<Unit> {
         service.delete(id)
-        return ResponseEntity.noContent().build()
+        return ResponseApi.success(
+            data = null,
+            message = "Organização removida com sucesso"
+        )
     }
 }
