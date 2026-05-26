@@ -7,18 +7,22 @@ export class DevicesApi {
   constructor(private apiService: ApiService) {}
 
   getAllDevices() {
-    return this.apiService.get<Device[]>(`devices/all`);
+    return this.apiService.get<Device[]>('devices');
+  }
+
+  getDeviceById(id: number) {
+    return this.apiService.get<Device>(`devices/${id}`);
   }
 
   createDevice(device: Partial<Device>) {
     return this.apiService.post<Device>('devices', device);
   }
 
-  updateDevice(id: string, device: Partial<Device>) {
-    return this.apiService.put<Device>('devices', { id, ...device });
+  updateDevice(id: number, device: Partial<Device>) {
+    return this.apiService.put<Device>(`devices/${id}`, device);
   }
 
-  deleteDevice(id: string) {
-    return this.apiService.delete<Device>(`devices?id=${id}`);
+  deleteDevice(id: number) {
+    return this.apiService.delete<Device>(`devices/${id}`);
   }
 }

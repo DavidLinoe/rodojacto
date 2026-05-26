@@ -8,7 +8,7 @@ import { ModalComponent } from '../../../components/modal/containers/modal.compo
 import { OrganizationModalComponent } from '../components/organization-modal/organization-modal.component';
 import { OrganizationsFacade } from '../facades/organizations.facade';
 import { OrganizationsApi } from '../apis/organizations.api';
-import { Organization, COMPANIES_COLUMNS } from '../models/organizations.model';
+import { Organization, ORGANIZATIONS_COLUMNS } from '../models/organizations.model';
 
 @Component({
   imports: [
@@ -25,7 +25,7 @@ import { Organization, COMPANIES_COLUMNS } from '../models/organizations.model';
 export class OrganizationsComponent implements OnInit {
   public open: boolean = false;
   public organizationFormGroup!: FormGroup;
-  public columns = COMPANIES_COLUMNS;
+  public columns = ORGANIZATIONS_COLUMNS;
 
   constructor(
     public router: Router,
@@ -36,14 +36,14 @@ export class OrganizationsComponent implements OnInit {
   ngOnInit(): void {
     this.organizationFormGroup = this.formBuilder.group({
       id: [null],
-      name: [''],
-      cnpj: [''],
+      corporateName: [''],
+      registrationCode: [''],
     });
     this.organizationsFacade.getAllOrganizations();
   }
 
   openCreateOrganization(): void {
-    this.organizationFormGroup.reset({ id: null, name: '', cnpj: '' });
+    this.organizationFormGroup.reset({ id: null, corporateName: '', registrationCode: '' });
     this.open = true;
   }
 

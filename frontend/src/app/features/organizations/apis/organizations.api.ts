@@ -6,19 +6,23 @@ import { Organization } from '../models/organizations.model';
 export class OrganizationsApi {
   constructor(private apiService: ApiService) {}
 
-  getAllOrganizations(collaboratorId: string) {
-    return this.apiService.get<Organization[]>(`organizations?id=${collaboratorId}`);
+  getAllOrganizations() {
+    return this.apiService.get<Organization[]>('organizations');
+  }
+
+  getOrganizationById(id: number) {
+    return this.apiService.get<Organization>(`organizations/${id}`);
   }
 
   createOrganization(organization: Partial<Organization>) {
     return this.apiService.post<Organization>('organizations', organization);
   }
 
-  updateOrganization(id: string, organization: Partial<Organization>) {
-    return this.apiService.put<Organization>('organizations', { id, ...organization });
+  updateOrganization(id: number, organization: Partial<Organization>) {
+    return this.apiService.put<Organization>(`organizations/${id}`, organization);
   }
 
-  deleteOrganization(id: string) {
-    return this.apiService.delete<Organization>(`organizations?id=${id}`);
+  deleteOrganization(id: number) {
+    return this.apiService.delete<Organization>(`organizations/${id}`);
   }
 }

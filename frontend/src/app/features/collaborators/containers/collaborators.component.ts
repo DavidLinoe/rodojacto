@@ -8,10 +8,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CollaboratorModalComponent } from '../components/collaborator-modal/collaborator-modal.component';
 import { CollaboratorsFacade } from '../facades/collaborators.facade';
 import { CollaboratorsApi } from '../apis/collaborators.api';
-import { Collaborator, USERS_COLUMNS } from '../models/collaborators.model';
+import { Collaborator, COLLABORATORS_COLUMNS } from '../models/collaborators.model';
 
 @Component({
-  imports: [CommonModule, TableComponent, TotalizerComponent, ModalComponent, CollaboratorModalComponent],
+  imports: [
+    CommonModule,
+    TableComponent,
+    TotalizerComponent,
+    ModalComponent,
+    CollaboratorModalComponent,
+  ],
   selector: 'feature-collaborators',
   templateUrl: './collaborators.component.html',
   providers: [CollaboratorsFacade, CollaboratorsApi],
@@ -19,7 +25,7 @@ import { Collaborator, USERS_COLUMNS } from '../models/collaborators.model';
 export class CollaboratorsComponent implements OnInit {
   public open: boolean = false;
   public collaboratorFormGroup!: FormGroup;
-  public columns = USERS_COLUMNS;
+  public columns = COLLABORATORS_COLUMNS;
 
   constructor(
     public router: Router,
@@ -30,25 +36,40 @@ export class CollaboratorsComponent implements OnInit {
   ngOnInit(): void {
     this.collaboratorFormGroup = this.formBuilder.group({
       id: [null],
-      name: [''],
+      fullName: [''],
       email: [''],
-      role: [''],
+      password: [''],
+      accessLevel: ['OPERATOR'],
     });
     this.collaboratorsFacade.getAllCollaborators();
   }
 
   openCreateCollaborator(): void {
-    this.collaboratorFormGroup.reset({ id: null, name: '', email: '', role: '' });
+    this.collaboratorFormGroup.reset({
+      id: null,
+      fullName: '',
+      email: '',
+      password: '',
+      accessLevel: 'OPERATOR',
+    });
     this.open = true;
   }
 
   openEditCollaborator(collaborator: Collaborator): void {
-    this.collaboratorFormGroup.patchValue(collaborator);
+    this.collaboratorFormGroup.patchValue({
+      id: collaborator.id,
+      fullName: collaborator.fullName,
+      email: collaborator.email,
+      accessLevel: collaborator.accessLevel,
+      password: '',
+    });
     this.open = true;
   }
 
   submitCollaborator(): void {
-    const { id, ...payload } = this.collaboratorFormGroup.value;
+    const { id, password, ...rest } = this.collaboratorFormGroup.value;
+    const payload: Partial<Collaborator> = { ...rest };
+    if (password) payload.password = password;
     if (id) {
       this.collaboratorsFacade.updateCollaborator(id, payload);
     } else {

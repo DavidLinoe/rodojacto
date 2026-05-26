@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 
 export interface DecodedToken {
-  collaboratorId: string;
-  role: string;
-  organizationId?: string;
+  sub: string;
+  id: number;
+  fullName: string;
+  accessLevel: 'ADMIN' | 'MANAGER' | 'OPERATOR';
+  organizationId: number;
   iat: number;
   exp: number;
 }

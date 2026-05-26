@@ -25,11 +25,12 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
     this.signUpForm = this.formBuilder.group(
       {
-        name: ['', [Validators.required]],
+        fullName: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', [Validators.required]],
-        role: ['USER', [Validators.required]],
+        corporateName: ['', [Validators.required]],
+        registrationCode: ['', [Validators.required]],
       },
       { validators: this.matchPasswords },
     );
@@ -49,8 +50,7 @@ export class SignUpComponent implements OnInit {
 
     this.loading = true;
     this.errorMessage = null;
-    const { confirmPassword, ...rest } = this.signUpForm.value;
-    const payload = { ...rest, organizationId: '' };
+    const { confirmPassword, ...payload } = this.signUpForm.value;
 
     this.authFacade.signUp(payload).subscribe({
       next: () => {
@@ -59,7 +59,7 @@ export class SignUpComponent implements OnInit {
       },
       error: (err) => {
         this.loading = false;
-        this.errorMessage = err?.error?.message ?? 'Could not create account';
+        this.errorMessage = err?.error?.message ?? 'Não foi possível criar a conta';
       },
     });
   }

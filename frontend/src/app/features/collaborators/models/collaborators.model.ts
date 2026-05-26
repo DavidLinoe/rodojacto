@@ -1,13 +1,25 @@
+export type AccessLevel = 'ADMIN' | 'MANAGER' | 'OPERATOR';
+
 export interface Collaborator {
   id: number;
-  name: string;
+  fullName: string;
   email: string;
-  role?: string;
+  accessLevel: AccessLevel;
+  organizationId: number;
+  password?: string;
+  createdAt?: string;
 }
 
-export const USERS_COLUMNS = [
+export const COLLABORATORS_COLUMNS = [
   { name: 'id', label: 'ID' },
-  { name: 'name', label: 'Name' },
+  { name: 'fullName', label: 'Nome' },
   { name: 'email', label: 'Email' },
-  { name: 'actions', label: 'Actions' },
+  { name: 'accessLevel', label: 'Nível de Acesso' },
+  { name: 'actions', label: 'Ações' },
+];
+
+export const ACCESS_LEVEL_OPTIONS: { value: AccessLevel; label: string }[] = [
+  { value: 'ADMIN', label: 'Administrador' },
+  { value: 'MANAGER', label: 'Gerente' },
+  { value: 'OPERATOR', label: 'Operador' },
 ];

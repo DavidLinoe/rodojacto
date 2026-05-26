@@ -1,9 +1,9 @@
 <component-totalizer
   [count]="(collaboratorsFacade.count$ | async) ?? 0"
-  [title]="'Collaborators'"
+  [title]="'Colaboradores'"
   [actions]="[
     {
-      label: 'Create',
+      label: 'Criar',
       icon: '+',
       callback: (item) => openCreateCollaborator(),
     },
@@ -15,12 +15,12 @@
   [columns]="columns"
   [actions]="[
     {
-      label: 'Edit',
+      label: 'Editar',
       icon: 'edit',
       callback: (item) => openEditCollaborator(item),
     },
     {
-      label: 'Delete',
+      label: 'Excluir',
       icon: 'delete',
       callback: (item) => deleteCollaborator(item),
     },
@@ -31,13 +31,15 @@
   [open]="open"
   [buttons]="[
     {
-      label: collaboratorFormGroup.get('id')?.value ? 'Update' : 'Create',
+      label: collaboratorFormGroup.get('id')?.value ? 'Atualizar' : 'Criar',
       disabled: false,
       callback: (item) => submitCollaborator(),
     },
   ]"
   (close)="open = false"
-  [title]="collaboratorFormGroup.get('id')?.value ? 'Edit Collaborator' : 'Create Collaborator'"
+  [title]="collaboratorFormGroup.get('id')?.value ? 'Editar Colaborador' : 'Criar Colaborador'"
 >
-  <feature-collaborators-component-collaborator-modal [form]="collaboratorFormGroup"></feature-collaborators-component-collaborator-modal>
+  <feature-collaborators-component-collaborator-modal
+    [form]="collaboratorFormGroup"
+  ></feature-collaborators-component-collaborator-modal>
 </component-modal>

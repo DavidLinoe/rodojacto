@@ -8,7 +8,7 @@ import { ModalComponent } from '../../../components/modal/containers/modal.compo
 import { DeviceModalComponent } from '../components/device-modal/device-modal.component';
 import { DevicesFacade } from '../facades/devices.facade';
 import { DevicesApi } from '../apis/devices.api';
-import { Device, MACHINES_COLUMNS } from '../models/devices.model';
+import { Device, DEVICES_COLUMNS } from '../models/devices.model';
 
 @Component({
   imports: [
@@ -25,7 +25,7 @@ import { Device, MACHINES_COLUMNS } from '../models/devices.model';
 export class DevicesComponent implements OnInit {
   public open: boolean = false;
   public deviceFormGroup!: FormGroup;
-  public columns = MACHINES_COLUMNS;
+  public columns = DEVICES_COLUMNS;
 
   constructor(
     public router: Router,
@@ -36,8 +36,8 @@ export class DevicesComponent implements OnInit {
   ngOnInit(): void {
     this.deviceFormGroup = this.formBuilder.group({
       id: [null],
-      name: [''],
-      serialNumber: [''],
+      model: [''],
+      assetTag: [''],
     });
     this.devicesFacade.getAllDevices();
   }
@@ -45,14 +45,18 @@ export class DevicesComponent implements OnInit {
   openCreateDevice(): void {
     this.deviceFormGroup.reset({
       id: null,
-      name: '',
-      serialNumber: '',
+      model: '',
+      assetTag: '',
     });
     this.open = true;
   }
 
   openEditDevice(device: Device): void {
-    this.deviceFormGroup.patchValue(device);
+    this.deviceFormGroup.patchValue({
+      id: device.id,
+      model: device.model,
+      assetTag: device.assetTag,
+    });
     this.open = true;
   }
 

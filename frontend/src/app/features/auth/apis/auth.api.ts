@@ -7,10 +7,16 @@ export class AuthApi {
   constructor(private apiService: ApiService) {}
 
   signIn(email: string, password: string) {
-    return this.apiService.post<AuthCollaborator>('auth/login', { email, password } as Partial<AuthCollaborator>);
+    return this.apiService.post<AuthCollaborator>(
+      'auth/login',
+      { email, password } as unknown as Partial<AuthCollaborator>,
+    );
   }
 
   signUp(payload: SignUpPayload) {
-    return this.apiService.post<AuthCollaborator>('auth/register', payload as Partial<AuthCollaborator>);
+    return this.apiService.post<AuthCollaborator>(
+      'auth/register',
+      payload as unknown as Partial<AuthCollaborator>,
+    );
   }
 }

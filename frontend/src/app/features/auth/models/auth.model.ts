@@ -4,19 +4,14 @@ export interface Auth {
 }
 
 export interface SignUpPayload {
-  name: string;
+  fullName: string;
   email: string;
   password: string;
-  role?: string;
-  organizationId?: string;
+  corporateName: string;
+  registrationCode: string;
 }
 
 export interface AuthCollaborator {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  organizationId: string;
-  createdAt: string;
   token: string;
+  type?: string;
 }

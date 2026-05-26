@@ -6,8 +6,12 @@ import { Collaborator } from '../models/collaborators.model';
 export class CollaboratorsApi {
   constructor(private apiService: ApiService) {}
 
-  getAllCollaborators(organizationId: string) {
-    return this.apiService.get<Collaborator[]>(`collaborators?organizationId=${organizationId}`);
+  getAllCollaborators() {
+    return this.apiService.get<Collaborator[]>('collaborators');
+  }
+
+  getCollaboratorById(id: number) {
+    return this.apiService.get<Collaborator>(`collaborators/${id}`);
   }
 
   createCollaborator(collaborator: Partial<Collaborator>) {
@@ -15,10 +19,10 @@ export class CollaboratorsApi {
   }
 
   updateCollaborator(id: number, collaborator: Partial<Collaborator>) {
-    return this.apiService.put<Collaborator>(`collaborators`, {id,...collaborator});
+    return this.apiService.put<Collaborator>(`collaborators/${id}`, collaborator);
   }
 
   deleteCollaborator(id: number) {
-    return this.apiService.delete<Collaborator>(`collaborators?collaboratorId=${id}`);
+    return this.apiService.delete<Collaborator>(`collaborators/${id}`);
   }
 }

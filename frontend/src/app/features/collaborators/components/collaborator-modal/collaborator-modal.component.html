@@ -12,11 +12,11 @@
   }
 
   <div class="flex flex-col gap-1">
-    <label class="text-sm font-medium text-gray-700">Name</label>
+    <label class="text-sm font-medium text-gray-700">Nome completo</label>
     <input
       type="text"
-      formControlName="name"
-      placeholder="Enter full name"
+      formControlName="fullName"
+      placeholder="Nome completo"
       class="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
     />
   </div>
@@ -26,20 +26,35 @@
     <input
       type="email"
       formControlName="email"
-      placeholder="name@example.com"
+      placeholder="nome@exemplo.com"
       class="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
     />
   </div>
 
   <div class="flex flex-col gap-1">
-    <label class="text-sm font-medium text-gray-700">Role</label>
+    <label class="text-sm font-medium text-gray-700">
+      Senha
+      @if (form().get('id')?.value) {
+        <span class="text-xs text-gray-500">(deixe em branco para manter)</span>
+      }
+    </label>
+    <input
+      type="password"
+      formControlName="password"
+      placeholder="••••••••"
+      class="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+    />
+  </div>
+
+  <div class="flex flex-col gap-1">
+    <label class="text-sm font-medium text-gray-700">Nível de acesso</label>
     <select
-      formControlName="role"
+      formControlName="accessLevel"
       class="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
     >
-      <option value="" disabled>Select a role</option>
-      <option value="ADMIN">Admin</option>
-      <option value="USER">Collaborator</option>
+      <option value="ADMIN">Administrador</option>
+      <option value="MANAGER">Gerente</option>
+      <option value="OPERATOR">Operador</option>
     </select>
   </div>
 </form>

@@ -1,9 +1,9 @@
 <component-totalizer
   [count]="(devicesFacade.count$ | async) ?? 0"
-  [title]="'Devices'"
+  [title]="'Dispositivos'"
   [actions]="[
     {
-      label: 'Create',
+      label: 'Criar',
       icon: '+',
       callback: (item) => openCreateDevice(),
     },
@@ -15,12 +15,12 @@
   [columns]="columns"
   [actions]="[
     {
-      label: 'Edit',
+      label: 'Editar',
       icon: 'edit',
       callback: (item) => openEditDevice(item),
     },
     {
-      label: 'Delete',
+      label: 'Excluir',
       icon: 'delete',
       callback: (item) => deleteDevice(item),
     },
@@ -31,13 +31,13 @@
   [open]="open"
   [buttons]="[
     {
-      label: deviceFormGroup.get('id')?.value ? 'Update' : 'Create',
+      label: deviceFormGroup.get('id')?.value ? 'Atualizar' : 'Criar',
       disabled: false,
       callback: (item) => submitDevice(),
     },
   ]"
   (close)="open = false"
-  [title]="deviceFormGroup.get('id')?.value ? 'Edit Device' : 'Create Device'"
+  [title]="deviceFormGroup.get('id')?.value ? 'Editar Dispositivo' : 'Criar Dispositivo'"
 >
   <feature-devices-component-device-modal
     [form]="deviceFormGroup"

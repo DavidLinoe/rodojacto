@@ -9,37 +9,56 @@ export class CollaboratorsFacade {
   public collaborators$: BehaviorSubject<Collaborator[]> = new BehaviorSubject<Collaborator[]>([]);
   public count$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
-  constructor(private collaboratorsApi: CollaboratorsApi, private tokenService: TokenService) {}
+  constructor(
+    private collaboratorsApi: CollaboratorsApi,
+    private tokenService: TokenService,
+  ) {}
 
   getAllCollaborators(): void {
-    const token = this.tokenService.decodeToken();
-    if (!token?.organizationId) {
-      console.error('Organization ID is missing in the token.');
-      return;
-    }
-    this.collaboratorsApi.getAllCollaborators(token?.organizationId).subscribe((response) => {
+    this.collaboratorsApi.getAllCollaborators().subscribe((response) => {
       if (response.data) {
         this.collaborators$.next(response.data);
-        this.count$.next(response.count || response.data.length);
+        this.count$.next(response.count ?? response.data.length);
       }
     });
   }
 
   createCollaborator(collaborator: Partial<Collaborator>): void {
-    this.collaboratorsApi.createCollaborator(collaborator).subscribe(() => {
-      this.getAllCollaborators();
+    const organizationId =
+      collaborator.organizationId ?? this.tokenService.decodeToken()?.organizationId;
+    if (!organizationId) {
+      console.error('organizationId ausente no token.');
+      return;
+    }
+    const payload: Partial<Collaborator> = { ...collaborator, organizationId };
+    this.collaboratorsApi.createCollaborator(payload).subscribe((response) => {
+      if (response.data) {
+        const updated = [...this.collaborators$.getValue(), response.data];
+        this.collaborators$.next(updated);
+        this.count$.next(updated.length);
+      }
     });
   }
 
   updateCollaborator(id: number, collaborator: Partial<Collaborator>): void {
-    this.collaboratorsApi.updateCollaborator(id, collaborator).subscribe(() => {
-      this.getAllCollaborators();
+    const organizationId =
+      collaborator.organizationId ?? this.tokenService.decodeToken()?.organizationId;
+    const payload: Partial<Collaborator> = { ...collaborator, organizationId };
+    this.collaboratorsApi.updateCollaborator(id, payload).subscribe((response) => {
+      if (response.data) {
+        const updated = this.collaborators$
+          .getValue()
+          .map((item) => (item.id === id ? response.data! : item));
+        this.collaborators$.next(updated);
+      }
     });
   }
 
   deleteCollaborator(id: number): void {
     this.collaboratorsApi.deleteCollaborator(id).subscribe(() => {
-      this.getAllCollaborators();
+      const updated = this.collaborators$.getValue().filter((item) => item.id !== id);
+      this.collaborators$.next(updated);
+      this.count$.next(updated.length);
     });
   }
 }

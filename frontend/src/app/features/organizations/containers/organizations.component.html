@@ -1,6 +1,13 @@
 <component-totalizer
   [count]="(organizationsFacade.count$ | async) ?? 0"
-  [title]="'Organizations'"
+  [title]="'Organizações'"
+  [actions]="[
+    {
+      label: 'Criar',
+      icon: '+',
+      callback: (item) => openCreateOrganization(),
+    },
+  ]"
 ></component-totalizer>
 
 <component-table
@@ -8,10 +15,15 @@
   [columns]="columns"
   [actions]="[
     {
-      label: 'Edit',
+      label: 'Editar',
       icon: 'edit',
       callback: (item) => openEditOrganization(item),
-    }
+    },
+    {
+      label: 'Excluir',
+      icon: 'delete',
+      callback: (item) => deleteOrganization(item),
+    },
   ]"
 ></component-table>
 
@@ -19,13 +31,13 @@
   [open]="open"
   [buttons]="[
     {
-      label: organizationFormGroup.get('id')?.value ? 'Update' : 'Create',
+      label: organizationFormGroup.get('id')?.value ? 'Atualizar' : 'Criar',
       disabled: false,
       callback: (item) => submitOrganization(),
     },
   ]"
   (close)="open = false"
-  [title]="organizationFormGroup.get('id')?.value ? 'Edit Organization' : 'Create Organization'"
+  [title]="organizationFormGroup.get('id')?.value ? 'Editar Organização' : 'Criar Organização'"
 >
   <feature-organizations-component-organization-modal
     [form]="organizationFormGroup"

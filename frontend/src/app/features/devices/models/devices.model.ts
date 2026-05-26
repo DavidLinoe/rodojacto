@@ -1,14 +1,14 @@
 export interface Device {
-  id: string;
-  name: string;
-  serialNumber: string;
-  organizationId: string;
+  id: number;
+  model: string;
+  assetTag: string;
+  organizationId: number;
+  createdAt?: string;
 }
 
-export const MACHINES_COLUMNS = [
+export const DEVICES_COLUMNS = [
   { name: 'id', label: 'ID' },
-  { name: 'name', label: 'Name' },
-  { name: 'serialNumber', label: 'Serial Number' },
-  { name: 'organizationId', label: 'Organization' },
-  { name: 'actions', label: 'Actions' },
+  { name: 'model', label: 'Modelo' },
+  { name: 'assetTag', label: 'Patrimônio' },
+  { name: 'actions', label: 'Ações' },
 ];

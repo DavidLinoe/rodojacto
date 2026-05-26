@@ -1,12 +1,13 @@
 export interface Organization {
-  id: string;
-  name: string;
-  cnpj: string;
+  id: number;
+  corporateName: string;
+  registrationCode: string;
+  createdAt?: string;
 }
 
-export const COMPANIES_COLUMNS = [
+export const ORGANIZATIONS_COLUMNS = [
   { name: 'id', label: 'ID' },
-  { name: 'name', label: 'Name' },
-  { name: 'cnpj', label: 'CNPJ' },
-  { name: 'actions', label: 'Actions' },
+  { name: 'corporateName', label: 'Razão Social' },
+  { name: 'registrationCode', label: 'CNPJ' },
+  { name: 'actions', label: 'Ações' },
 ];
