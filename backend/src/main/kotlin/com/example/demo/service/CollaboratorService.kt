@@ -5,7 +5,6 @@ import com.example.demo.dto.response.CollaboratorResponse
 import com.example.demo.exception.BusinessException
 import com.example.demo.exception.NotFoundException
 import com.example.demo.models.entity.Collaborator
-import com.example.demo.models.enums.AccessLevel
 import com.example.demo.repository.CollaboratorRepository
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -39,11 +38,8 @@ class CollaboratorService(
     @Transactional(readOnly = true)
     fun findAll(): List<CollaboratorResponse> {
         val user = organizationService.currentUser()
-        val list = if (user.accessLevel != AccessLevel.OPERATOR)
-            repository.findAll()
-        else
-            repository.findAllByOrganizationId(user.organization.id)
-        return list.map { it.toResponse() }
+        return repository.findAllByOrganizationId(user.organization.id)
+            .map { it.toResponse() }
     }
 
     @Transactional(readOnly = true)
